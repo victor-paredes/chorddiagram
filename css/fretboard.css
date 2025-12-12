@@ -1,0 +1,965 @@
+body {
+    font-family: sans-serif;
+}
+body div {
+ /* do not add padding here */
+}
+
+/* Fretboard Container Styles */
+[data-fretboard="full"] {
+    display: inline-block;
+    margin-left: 50px;
+}
+
+/* Fret Configuration Controls */
+#fret_configuration {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    background-color: #e8e8e8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.config_group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.config_group label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.config_select {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 2px solid #333;
+    border-radius: 6px;
+    background-color: white;
+    cursor: pointer;
+    min-width: 80px;
+}
+
+.config_select:focus {
+    outline: none;
+    border-color: #555;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+}
+
+
+
+:root {
+
+    /* Settings Group A - Fretboard Variables */
+    --fretboard-width: 560px;
+    --fretboard-height: 80vh;
+    --header-height: 50px;
+    --fret-0-height: 70px; /* Fret 0 height - controls the height of fret 0 */
+    --string-thickest-width: 10px;
+    --string-thinnest-width: 2.5px;
+    --dot-size: 70px;
+    --interval-indicator-width: 24px;
+    --dot-text-font-size: 32px;
+    --interval-label-font-size: 22px;
+    --tuning-label-font-size: 25px;
+    --fret-indicator-font-size: 25px;
+    --fret-divider-height: 11px;
+    --fret-divider-width: 100%; /* Control the width of fret dividers */
+    --nut-divider-height: 60px; /* Nut divider height - controls the height of the nut divider */
+
+
+
+
+
+
+  
+
+
+
+    /* Settings Group B - Fretboard Skin */
+    --tuning-label-color: #333;
+    --fret-indicator-color: #014379;
+    --fret-indicator-secondary: #006bc4;
+    --fret-indicator-tertiary: #579dd6;
+    /* Note: showFretIndicators and fretboardBindingDisplay are now JavaScript variables in Settings Group A */
+    --fingerboard-row-0-color: linear-gradient(0deg,rgba(49, 36, 32, 1) 1%, rgba(82, 69, 69, 1) 99%);
+    --fingerboard-row-0-image: no-image; /* Use "no-image" marker (not a CSS value) to trigger fallback to color. Set to url('image.jpg') for background image */
+    /* MAIN FRET AREA styling (excludes header, fret 0, and nut) */
+    --main-fret-area-bg-color: linear-gradient(90deg,rgba(24, 12, 7, 1) 0%, rgba(24, 12, 7, 1) 100%);
+    --main-fret-area-bg-image: url("/img/rosewood.jpg"); /* Set to url('image.jpg') 
+    for background image */ 
+    --fret-divider-color: linear-gradient(0deg,rgba(138, 138, 138, 1) 12%, rgba(214, 214, 214, 1) 24%, rgba(213, 213, 213, 1) 75%, rgba(135, 135, 135, 1) 86%);
+    --fret-divider-image: no-image; /* Use "no-image" marker (not a CSS value) to trigger fallback to color. Set to url('image.jpg') for background image */
+    --nut-divider-image: no-image; /* Use "no-image" marker (not a CSS value) to trigger fallback to color. Set to url('image.jpg') for background image */
+    --nut-divider-color: linear-gradient(0deg,rgba(161, 156, 141, 1) 0%, rgba(183, 177, 159, 1) 13%, rgba(214, 208, 188, 1) 66%, rgba(238, 232, 210, 1) 82%, rgba(133, 129, 113, 1) 89%); /* Nut divider color */
+    --fretbinding-width: 10px;
+    --fretbinding-background: linear-gradient(90deg,rgba(245, 244, 240, 1) 0%, rgba(240, 230, 216, 1) 100%);
+    --fretbinding-background-image: no-image; /* Use "no-image" marker (not a CSS value) to trigger fallback to color. Set to url('image.jpg') for background image */
+    --marker-dot-size: 64px;
+    --marker-dot-color: linear-gradient(180deg,rgba(164, 159, 143, 1) 0%, rgba(176, 155, 127, 0.765) 100%);
+    --marker-dot-background-image: none;
+    --marker-dot-background: linear-gradient(180deg,rgba(164, 159, 143, 1) 0%, rgba(176, 155, 127, 0.765) 100%);
+    /* Default string colors (string 1 = lowest/thickest, string 6 = highest/thinnest for standard 6-string) */
+    --string-1-default-color: var(--stringcolor_bronze);
+    --string-2-default-color: var(--stringcolor_bronze);
+    --string-3-default-color: var(--stringcolor_bronze);
+    --string-4-default-color: var(--stringcolor_bronze);
+    --string-5-default-color: var(--stringcolor_nickel);
+    --string-6-default-color: var(--stringcolor_nickel);
+    --string-7-color: var(--stringcolor_nickel);
+    --string-8-color: var(--stringcolor_nickel);
+    --string-9-color: var(--stringcolor_nickel);
+
+
+    --dot-outer-circle-color: black;
+    --dot-inner-circle-color: #333;
+    --dot-text-color: #ffffff;
+    
+    --hover-dot-outer-color: rgba(189, 183, 183, 0.3);
+    --hover-dot-outer-border-color: rgba(255, 255, 255, 0.5);
+    --hover-dot-inner-color: rgba(189, 189, 189, 0.3);
+    --hover-dot-text-color: rgba(255, 255, 255, 0.6);
+    
+    
+    /* Interval indicator colors */
+    /* --hover-interval-indicator-bg-color: rgba(59, 130, 246, 0.5); */
+    --hover-interval-indicator-text-color: rgba(255, 255, 255, 0.7);
+    --hover-interval-indicator-border-color: rgba(255, 255, 255, 0.5);
+    --interval-root-color: #ef4444;        /* R - Red */
+    --interval-minor-2nd-color: #f97316;   /* b2 - Orange */
+    --interval-major-2nd-color: #f59e0b;   /* 2 - Amber */
+    --interval-minor-3rd-color: #eab308;   /* b3 - Yellow */
+    --interval-major-3rd-color: #84cc16;   /* 3 - Lime */
+    --interval-perfect-4th-color: #22c55e; /* 4 - Green */
+    --interval-tritone-color: #14b8a6;     /* b5 - Teal */
+    --interval-perfect-5th-color: #06b6d4; /* 5 - Cyan */
+    --interval-minor-6th-color: #0ea5e9;   /* b6 - Sky */
+    --interval-major-6th-color: #3b82f6;   /* 6 - Blue */
+    --interval-minor-7th-color: #6366f1;   /* b7 - Indigo */
+    --interval-major-7th-color: #8b5cf6;   /* 7 - Violet */
+    --interval-octave-color: #a855f7;      /* 8 - Purple */
+    --interval-minor-9th-color: #c026d3;   /* b9 - Fuchsia */
+    --interval-major-9th-color: #d946ef;   /* 9 - Magenta */
+    --interval-aug-9th-color: #e879f9;     /* #9 - Pink */
+    --interval-perfect-11th-color: #f0abfc;/* 11 - Light Pink */
+    --interval-aug-11th-color: #fae8ff;    /* #11 - Pale Pink */
+
+
+
+
+
+ 
+
+
+
+
+    /* Settings Group C - Chord Variables */
+    --num-strings: 6;
+
+
+
+
+
+
+
+    /* Settings Group D - General Defaults */
+    /* Default String Colors */
+    --stringcolor_bronze: linear-gradient(90deg,rgba(161, 156, 141, 1) 0%, rgba(232, 190, 132, 1) 26%, rgba(133, 129, 113, 1) 100%);
+    --stringcolor_nickel: linear-gradient(90deg,rgba(163, 163, 163, 1) 0%, rgba(232, 232, 232, 1) 26%, rgba(130, 130, 130, 1) 100%);
+    --row-0-indicator-top: 0px;
+    --row-0-indicator-right: auto;
+    --row-0-indicator-bottom: auto;
+    --row-0-indicator-left: auto;
+
+    /* Auto-calculated string widths */
+    --string-width-range: calc(var(--string-thickest-width) - var(--string-thinnest-width));
+    --string-width-0: var(--string-thickest-width);
+    --string-width-1: calc(var(--string-thickest-width) - var(--string-width-range) * (1/9));
+    --string-width-2: calc(var(--string-thickest-width) - var(--string-width-range) * (2/9));
+    --string-width-3: calc(var(--string-thickest-width) - var(--string-width-range) * (3/9));
+    --string-width-4: calc(var(--string-thickest-width) - var(--string-width-range) * (4/9));
+    --string-width-5: calc(var(--string-thickest-width) - var(--string-width-range) * (5/9));
+    --string-width-6: calc(var(--string-thickest-width) - var(--string-width-range) * (6/9));
+    --string-width-7: calc(var(--string-thickest-width) - var(--string-width-range) * (7/9));
+    --string-width-8: calc(var(--string-thickest-width) - var(--string-width-range) * (8/9));
+    --string-width-9: var(--string-thinnest-width);
+}
+
+
+    
+
+
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+
+
+
+    
+
+
+[id$="_fretboard_break_row"] div:not(.string_1, .string_2, .string_3, .string_4, .string_5, .string_6, .string_7, .string_8, .string_9, .string_10) {
+    background: none;
+}
+.break_row_text {
+    background-color: var(--fret-indicator-secondary) !important;
+    border-radius: 30px;
+    border: 3px solid var(--fret-indicator-tertiary);
+    color: #fff;
+    padding: 4px 25px;
+}
+
+[id$="_fretboard_break_row"] .fingerboard_piece, [id$="_fretboard_break_row"] .fingerboard_piece_middle, .break_binding {
+    background: var(--fret-indicator-color) !important;
+}
+
+
+
+.last-visible-fret .chord_builder_fretboard_row .fret_divider .strings_container {
+    display: none;
+  
+}
+
+
+
+
+    [id$="_chord_builder_wrapper"] {
+        width : var(--fretboard-width);
+        height: var(--fretboard-height);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 0;
+        
+    }
+    .chord_builder_fret_row_wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        border: 0;
+        padding: 0;
+        height: var(--fret-row-height, auto); /* Use CSS variable, fallback to auto */
+    }
+    
+    /* Fret 0 uses --fret-0-height variable from CSS source of truth */
+    [id$="_chord_builder_fret_row_wrapper_0"] {
+        height: var(--fret-0-height);
+        min-height: var(--fret-0-height); /* Ensure minimum height is respected */
+    }
+    
+    /* Nut uses --nut-divider-height variable from CSS source of truth */
+    [id$="_chord_builder_nut"] {
+        height: var(--nut-divider-height);
+        
+    }
+
+   .fret_indicator_content_wrapper {
+    z-index: 1;
+    background-color: var(--fret-indicator-color);
+    padding: 5px 30px 5px 16px;
+    border-radius: 15px 1px 1px 15px;
+    border: 3px solid var(--fret-indicator-secondary);
+    border-right: 0;
+    color: #ffffff;
+    background-color: var(--fret-indicator-color);
+   }
+    .chord_builder_fret_indicator {
+        width: 30px;
+        border: 0;
+        padding: 0;
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        font-size: var(--fret-indicator-font-size);
+        /* padding-right: 30px; */
+    }
+
+    /* Fret indicator visibility control */
+    /* Default: hide all - JavaScript will control visibility based on showFretIndicators setting */
+    .chord_builder_fret_indicator > div {
+        display: none;
+    }
+
+    .fretboard_binding {
+        display: block; /* JavaScript controls visibility via fretboardBindingDisplay setting */
+        width: var(--fretbinding-width, 10px);
+        background: var(--fretbinding-background-image, var(--fretbinding-background));
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+    }
+
+   
+    
+
+
+    .fretboard_binding_fx {
+        border: 0;
+        border-color: #b6b6b6 !important;
+
+    }
+    .binding_left {
+        background: linear-gradient(-90deg,rgba(240, 230, 216, 1) 0%, rgba(245, 244, 240, 1) 100%);
+        border-right: 0 !important;
+    }
+    .binding_right {
+        background: linear-gradient(90deg,rgba(245, 244, 240, 1) 0%, rgba(240, 230, 216, 1) 100%);;
+    }
+    .binding_nut_left {
+        background: var(--nut-divider-color);
+        border: 0;
+        
+
+    }
+    .binding_nut_right{
+        background: var(--nut-divider-color);
+
+
+    }
+    .binding_0_fret_left {
+        background: var(--fingerboard-row-0-color);
+        border: 0;
+        border-color: solid !important;
+        
+    }
+    .binding_0_fret_right {
+        background: var(--fingerboard-row-0-color);
+        border: 0;
+        border-color: solid !important;
+       
+    }
+
+  /* .chord_builder_fret_indicator {
+    border-right: 10px solid red;
+}
+#chord_builder_fret_row_wrapper_0 .chord_builder_fret_indicator,
+#chord_fretboard_header .chord_builder_fret_indicator, #chord_builder_nut .chord_builder_fret_indicator {
+  border-right: none;
+} */
+
+    .chord_builder_fretboard_row {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        border: 0;
+        padding: 0;
+    }
+
+    .strings_container {
+        display: grid;
+        grid-template-columns: repeat(var(--num-strings), 1fr);
+        flex: 1;
+        border: 0;
+        padding: 0;
+        position: relative;
+        z-index: 2;
+    }
+
+    .fret_divider {
+        height: var(--fret-divider-height);
+        width: var(--fret-divider-width);
+        background: var(--fret-divider-color);
+        border: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .fret_divider_overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 100%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .fret_divider .strings_container {
+        height: 100%;
+        position: relative;
+        z-index: 1;
+    }
+
+    [id$="_chord_builder_fret_row_wrapper_0"] .fret_divider {
+        height: var(--nut-divider-height);
+        background: var(--nut-divider-color);
+    }
+
+    /* Main fret area styling - applies to all fret rows EXCEPT header, fret 0, and nut */
+    .chord_builder_fret_row_wrapper:not([id$="_chord_fretboard_header"]):not([id$="_chord_builder_fret_row_wrapper_0"]):not([id$="_chord_builder_nut"]) .chord_builder_fretboard_row {
+        background: var(--main-fret-area-bg-image, var(--main-fret-area-bg-color));
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+
+    /* Fret position markers */
+    .fret_position_marker {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+        pointer-events: none;
+        gap: 40px;
+    }
+
+    .fret_position_marker .marker_dot {
+        margin-top: -10px;
+        width: var(--marker-dot-size);
+        height: var(--marker-dot-size);
+        /* background-image is set directly via JavaScript when an image is provided */
+        background: var(--marker-dot-color);
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        filter: blur(0.6px);
+    }
+
+    .fret_position_marker.double {
+        gap: 25px;
+    }
+
+    
+
+
+    .fingerboard_piece_wrapper {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: stretch;
+        padding: 0;
+        border: 0;
+        position: relative;
+        cursor: pointer;
+    }
+
+    /* When using double strings (mandolin style), adjust grid to accommodate 5 columns */
+    .fingerboard_piece_wrapper:has(.fingerboard_second_string) {
+        grid-template-columns: 1fr auto auto auto 1fr;
+    }
+
+    .fingerboard_piece {
+        background: var(--fingerboard-other-rows-image, var(--fingerboard-other-rows-color));
+        background-size: cover;
+        background-position: center;
+        border: 0;
+    }
+
+    [id$="_chord_builder_fret_row_wrapper_0"] .chord_builder_fretboard_row {
+        background: var(--fingerboard-row-0-color); 
+    }
+    [id$="_chord_builder_fret_row_wrapper_0"] .strings_container {
+        z-index: 1;
+    }
+    [id$="_chord_builder_fret_row_wrapper_0"] .fingerboard_piece_middle {
+        /* background: var(--fingerboard-row-0-color); */
+    }
+    .fingerboard_piece_middle {
+        width: 5px;
+    }
+
+    .fretboard_break_row .fingerboard_second_string {
+        box-shadow: none !important;
+    }
+
+    [id$="_chord_builder_fret_row_wrapper_0"] .fingerboard_second_string {
+        /* Second string in double-string pair - shadow on opposite side for visual distinction */
+        box-shadow: none !important;
+    }
+
+    [id$="_chord_builder_fret_row_wrapper_0"] .fingerboard_piece {
+        background: var(--fingerboard-row-0-image, var(--fingerboard-row-0-color));
+        background-size: cover;
+        background-position: center;
+    }
+
+    [id$="_chord_builder_fret_row_wrapper_0"] .chord_builder_fret_indicator {
+        position: relative;
+        top: var(--row-0-indicator-top);
+        right: var(--row-0-indicator-right);
+        bottom: var(--row-0-indicator-bottom);
+        left: var(--row-0-indicator-left);
+    }
+
+
+    /* String classes - supports strings 1-10 */
+    .string_1, .string_2, .string_3, .string_4, .string_5,
+    .string_6, .string_7, .string_8, .string_9, .string_10 {
+        padding: 0;
+        border: 0;
+        box-shadow: 10px 0 7px #00000085;
+    }
+    
+    .string_1 { 
+        width: var(--string-width-0); 
+        background: var(--string-1-color, var(--string-1-default-color));
+    }
+    .string_2 { 
+        width: var(--string-width-1); 
+        background: var(--string-2-color, var(--string-2-default-color));
+    }
+    .string_3 { 
+        width: var(--string-width-2); 
+        background: var(--string-3-color, var(--string-3-default-color));
+    }
+    .string_4 { 
+        width: var(--string-width-3); 
+        background: var(--string-4-color, var(--string-4-default-color));
+    }
+    .string_5 { 
+        width: var(--string-width-4); 
+        background: var(--string-5-color, var(--string-5-default-color));
+    }
+    .string_6 { 
+        width: var(--string-width-5); 
+        background: var(--string-6-color, var(--string-6-default-color));
+    }
+    .string_7 { 
+        width: var(--string-width-6); 
+        background: var(--string-7-color);
+    }
+    .string_8 { 
+        width: var(--string-width-7); 
+        background: var(--string-8-color);
+    }
+    .string_9 { 
+        width: var(--string-width-8); 
+        background: var(--string-9-color);
+    }
+    .string_10 { 
+        width: var(--string-width-9); 
+        background: var(--string-10-color);
+    }
+
+
+
+.fingerboard_contents {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: stretch;
+    border: 0;
+    padding: 0;
+    
+}
+
+
+
+
+
+    /* Dot animations */
+    @keyframes dotFadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes dotFadeOut {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+
+    @keyframes dotScaleIn {
+        from {
+            transform: translate(-50%, -50%) scale(0);
+        }
+        to {
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
+
+    @keyframes dotScaleOut {
+        from {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        to {
+            transform: translate(-50%, -50%) scale(0);
+        }
+    }
+
+    /* Fingering dot container */
+    .fingering_dot {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        z-index: 100;
+        display: none;
+        pointer-events: none;
+        width: auto;
+        height: auto;
+        opacity: 0;
+    }
+
+    .fingering_dot.active {
+        display: block;
+        animation: dotFadeIn 0.2s ease-out forwards, dotScaleIn 0.2s ease-out forwards;
+    }
+
+    .fingering_dot.removing {
+        display: block;
+        animation: dotFadeOut 0.2s ease-out forwards, dotScaleOut 0.2s ease-out forwards;
+    }
+
+    /* Unplayed dot container */
+    .fingering_dot_unplayed {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        z-index: 100;
+        display: none;
+        pointer-events: none;
+        width: auto;
+        height: auto;
+        opacity: 0;
+    }
+
+    .fingering_dot_unplayed.active {
+        display: block;
+        animation: dotFadeIn 0.2s ease-out forwards, dotScaleIn 0.2s ease-out forwards;
+    }
+
+    .fingering_dot_unplayed.removing {
+        display: block;
+        animation: dotFadeOut 0.2s ease-out forwards, dotScaleOut 0.2s ease-out forwards;
+    }
+
+    /* Hover dot - preview when hovering */
+    .fingering_dot_hover {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        z-index: 99;
+        display: none;
+        pointer-events: none;
+        width: auto;
+        height: auto;
+        opacity: 0;
+    }
+
+    .fingerboard_piece_wrapper:hover .fingering_dot_hover {
+        display: block;
+        animation: dotFadeIn 0.2s ease-out forwards, dotScaleIn 0.2s ease-out forwards;
+    }
+
+    /* Hide hover dot when active dot is showing */
+    .fingerboard_piece_wrapper .fingering_dot.active ~ .fingering_dot_hover,
+    .fingerboard_piece_wrapper:has(.fingering_dot.active) .fingering_dot_hover,
+    .fingerboard_piece_wrapper .fingering_dot_unplayed.active ~ .fingering_dot_hover,
+    .fingerboard_piece_wrapper:has(.fingering_dot_unplayed.active) .fingering_dot_hover {
+        display: none;
+    }
+
+    /* Disable hover and interaction for non-interactive rows */
+    .fretrow_non_interactive .fingerboard_piece_wrapper:hover .fingering_dot_hover {
+        display: none !important;
+    }
+
+    .fretrow_non_interactive .fingerboard_piece_wrapper {
+        cursor: default !important;
+    }
+
+    /* Row 0 specific dot positioning */
+
+    [id$="_chord_builder_fret_row_wrapper_0"] .fingering_dot,
+    [id$="_chord_builder_fret_row_wrapper_0"] .fingering_dot_hover,
+    [id$="_chord_builder_fret_row_wrapper_0"] .fingering_dot_unplayed {
+        top: 80%;
+        left: 50%;
+        right: auto;
+        bottom: auto;
+    }
+
+    /* DOT DESIGN STYLES - Customize your dot appearance here */
+    .fingering_dot_design {
+        position: relative;
+        width: var(--dot-size);
+        height: var(--dot-size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dot_outer_circle {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: var(--dot-outer-circle-color);
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 4px 3px 20px #00000088;
+    }
+
+    .dot_inner_circle {
+        position: absolute;
+        width: 80%;
+        height: 80%;
+        background-color: var(--dot-inner-circle-color);
+        border-radius: 50%;
+    }
+
+    .dot_text {
+        position: relative;
+        color: var(--dot-text-color);
+        font-size: var(--dot-text-font-size, 16px);
+        font-weight: bold;
+        z-index: 1;
+    
+    }
+
+    .interval_indicator_label {
+        position: absolute;
+        top: -14px;
+        right: -8px;
+        padding: 1px 8px;
+        background-color: var(--interval-major-6th-color);
+        color: white;
+        font-size: var(--interval-label-font-size, 11px);
+        font-weight: bold;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        border: 1px solid white;
+        font-family: sans-serif;
+    }
+    
+    /* Interval-specific colors */
+    .interval_indicator_label[data-interval="R"] { background-color: var(--interval-root-color); }
+    .interval_indicator_label[data-interval="b2"] { background-color: var(--interval-minor-2nd-color); }
+    .interval_indicator_label[data-interval="2"] { background-color: var(--interval-major-2nd-color); }
+    .interval_indicator_label[data-interval="b3"] { background-color: var(--interval-minor-3rd-color); }
+    .interval_indicator_label[data-interval="3"] { background-color: var(--interval-major-3rd-color); }
+    .interval_indicator_label[data-interval="4"] { background-color: var(--interval-perfect-4th-color); }
+    .interval_indicator_label[data-interval="b5"] { background-color: var(--interval-tritone-color); }
+    .interval_indicator_label[data-interval="5"] { background-color: var(--interval-perfect-5th-color); }
+    .interval_indicator_label[data-interval="b6"] { background-color: var(--interval-minor-6th-color); }
+    .interval_indicator_label[data-interval="6"] { background-color: var(--interval-major-6th-color); }
+    .interval_indicator_label[data-interval="b7"] { background-color: var(--interval-minor-7th-color); }
+    .interval_indicator_label[data-interval="7"] { background-color: var(--interval-major-7th-color); }
+    .interval_indicator_label[data-interval="8"] { background-color: var(--interval-octave-color); }
+    .interval_indicator_label[data-interval="b9"] { background-color: var(--interval-minor-9th-color); }
+    .interval_indicator_label[data-interval="9"] { background-color: var(--interval-major-9th-color); }
+    .interval_indicator_label[data-interval="#9"] { background-color: var(--interval-aug-9th-color); }
+    .interval_indicator_label[data-interval="11"] { background-color: var(--interval-perfect-11th-color); }
+    .interval_indicator_label[data-interval="#11"] { background-color: var(--interval-aug-11th-color); }
+
+    /* HOVER DOT DESIGN STYLES - Customize hover preview appearance here */
+    .fingering_dot_hover_design {
+        position: relative;
+        width: var(--dot-size);
+        height: var(--dot-size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dot_hover_outer_circle {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: var(--hover-dot-outer-color);
+        border-radius: 50%;
+        border: 2px solid var(--hover-dot-outer-border-color);
+    }
+
+    .dot_hover_inner_circle {
+        position: absolute;
+        width: 80%;
+        height: 80%;
+        background-color: var(--hover-dot-inner-color);
+        border-radius: 50%;
+    }
+
+    .dot_hover_text {
+        position: relative;
+        color: var(--hover-dot-text-color);
+        font-size: var(--dot-text-font-size, 16px);
+        font-weight: bold;
+        z-index: 1;
+    }
+
+    .dot_hover_interval_indicator_label {
+        position: absolute;
+        top: -20px;
+        right: -16px;
+        padding: 5px 8px;
+        background-color: var(--hover-interval-indicator-bg-color);
+        color: var(--hover-interval-indicator-text-color);
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        border: 1px solid var(--hover-interval-indicator-border-color);
+        font-family: sans-serif;
+    }
+
+    /* UNPLAYED DOT DESIGN STYLES - Customize unplayed/muted string (X) appearance here */
+    .fingering_dot_unplayed_design {
+        position: relative;
+        width: var(--dot-size);
+        height: var(--dot-size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dot_unplayed_outer_circle {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #c7c7c7;
+        border-radius: 50%;
+        border: 2px solid white;
+    }
+
+    .dot_unplayed_x {
+        position: relative;
+        color: rgb(0, 0, 0);
+        font-size: 40px;
+        font-weight: bold;
+        z-index: 1;
+        line-height: 1;
+    }
+
+    /* Tuning label styles */
+    [id$="_chord_fretboard_header"] {
+    }
+
+    [id$="_chord_fretboard_header"] .chord_builder_fretboard_row {
+        flex-direction: row;
+    }
+
+    .tuning_label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--tuning-label-font-size);
+        font-weight: bold;
+        color: var(--tuning-label-color);
+        width: 100%;
+        height: 100%;
+    }
+
+
+
+
+
+    [id$="_chord_fretboard_header"] .fingerboard_piece_wrapper {
+        padding-bottom: 10px;
+    }
+
+    /* Nut styles */
+    [id$="_chord_builder_nut"] {
+        height: var(--nut-divider-height);
+        z-index: -1;
+    }
+
+    /* Fretboard break row styles - identical to nut */
+    [id$="_fretboard_break_row"] {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        border: 0;
+        padding: 0;
+        height: var(--nut-divider-height);
+        text-align: center;
+    }
+
+    [id$="_fretboard_break_row"] .chord_builder_fretboard_row {
+        background: var(--nut-divider-image, var(--nut-divider-color));
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        border: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    [id$="_fretboard_break_row"] .break_row_overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        pointer-events: none;
+    }
+
+    [id$="_fretboard_break_row"] .fingerboard_piece {
+        background: var(--nut-divider-image, var(--nut-divider-color));
+        background-size: cover;
+        background-position: center;
+    }
+
+    [id$="_chord_builder_nut"] .chord_builder_fretboard_row {
+        background: var(--nut-divider-color);
+        background-size: cover;
+        background-position: center;
+    }
+
+    [id$="_chord_builder_nut"] .fingerboard_piece {
+        background: var(--nut-divider-color);
+        background-size: cover;
+        background-position: center;
+    }
+
+    .fret_board_fret {
+        background: var(--fret-divider-image, var(--fret-divider-color));
+        background-size: cover;
+        background-position: center;
+    }
+.fret_board_fret .fingerboard_piece {
+    background: transparent;
+    background-image: none;
+}
+
+.tuning_header_row .fingerboard_piece_wrapper {
+    grid-template-columns: initial;
+}
+

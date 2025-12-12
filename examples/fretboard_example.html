@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fretboard Example</title>
+    <link rel="stylesheet" href="../css/fretboard.css">
+    <link rel="stylesheet" href="../css/fretboard_control_panel.css">
+</head>
+<body>
+
+    <div id="structure">
+
+        <!-- Left Side Panel -->
+        <div id="fretboard-control-panel" fretboard_target="attach_cpanel">
+            <h2>Fretboard Controls</h2>
+        </div>
+        
+
+
+        <!-- Right Content Area -->
+        <div id="fretboard-container">
+            <div id="fretboard_1" data-fretboard="full" data-fretboard-id="attach_cpanel"></div>
+        </div>
+        
+    </div>
+
+
+
+
+    <!-- Include the fretboard JavaScript library -->
+    <script src="../js/fretboard.js"></script>
+    <script src="../js/fretboard_control_panel.js"></script>
+    <script src="sample_api_input.js"></script>
+    <!-- Include the control panel (optional - for testing/development) -->
+
+
+   
+
+
+    <style>
+        body {
+            margin: 0;
+        }
+        #structure, #structure2 {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+</body>
+</html>
+
